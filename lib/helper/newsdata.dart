@@ -39,6 +39,7 @@ class CategoryNews {
   final apiKey = apis().getApiKey();
 
   Future<void> getNews(String category) async {
+    category = category.toLowerCase();
     var response = await get(
       Uri.parse(
           'http://newsapi.org/v2/top-headlines?country=in&category=$category'),
@@ -57,7 +58,6 @@ class CategoryNews {
             description: element['description'],
             url: element['url'],
           );
-
           datatobesavedin.add(articleModel);
         }
       });

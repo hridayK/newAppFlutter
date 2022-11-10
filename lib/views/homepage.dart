@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dailynews/models/categorymodel.dart';
+import 'package:dailynews/views/categorynews.dart';
 import 'package:dailynews/views/categorypage.dart';
 import 'package:flutter/material.dart';
 import 'package:dailynews/models/newsmodel.dart';
@@ -89,7 +90,8 @@ class _HomePageState extends State<HomePage> {
                         url: articles[index].url,
                         urlToImage: articles[index].urlToImage,
                       );
-                    }),
+                    },
+                  ),
           ],
         ),
       ),
@@ -104,37 +106,47 @@ class CategoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 16),
-      child: Stack(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: CachedNetworkImage(
-              imageUrl: imageUrl,
-              width: 170,
-              height: 90,
-              fit: BoxFit.cover,
-            ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) =>
+                CategoryFragment(category: categoryName.toLowerCase()),
           ),
-          Container(
-            alignment: Alignment.center,
-            width: 170,
-            height: 90,
-            decoration: BoxDecoration(
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 16),
+        child: Stack(
+          children: <Widget>[
+            ClipRRect(
               borderRadius: BorderRadius.circular(6),
-              color: Colors.black26,
-            ),
-            child: Text(
-              categoryName,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-                fontSize: 18,
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
+                width: 170,
+                height: 90,
+                fit: BoxFit.cover,
               ),
             ),
-          ),
-        ],
+            Container(
+              alignment: Alignment.center,
+              width: 170,
+              height: 90,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: Colors.black26,
+              ),
+              child: Text(
+                categoryName,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -153,28 +165,32 @@ class NewsTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(10.0),
-      color: Colors.grey.shade200,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(6.0),
-        child: Column(
-          children: [
-            CachedNetworkImage(
-              imageUrl: urlToImage,
-              width: 380,
-              height: 200,
-              fit: BoxFit.cover,
-            ),
-            Text(
-              title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-            ),
-            Container(
-              padding: EdgeInsets.all(4.0),
-              child: Text(description),
-            ),
-          ],
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        margin: const EdgeInsets.all(10.0),
+        color: Colors.grey.shade200,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(6.0),
+          child: Column(
+            children: [
+              CachedNetworkImage(
+                imageUrl: urlToImage,
+                width: 380,
+                height: 200,
+                fit: BoxFit.cover,
+              ),
+              Text(
+                title,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              ),
+              Container(
+                padding: EdgeInsets.all(4.0),
+                child: Text(description),
+              ),
+            ],
+          ),
         ),
       ),
     );
